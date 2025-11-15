@@ -1,0 +1,29 @@
+`timescale 1ns/1ps
+module tb_mod13();
+
+    reg clk, reset;
+    wire [3:0] count;
+
+    // DUT (Device Under Test) instantiation
+    mod13_counter_new dut (
+        .clk(clk),
+        .reset(reset),
+        .count(count)
+    );
+
+    // Clock generation (10ns period)
+    always #5 clk = ~clk;  // 50% duty cycle clock
+
+    initial begin
+        // Initialize
+        clk = 0;
+        reset = 1;
+
+        // Apply reset for 20 ns
+        #20 reset = 0;
+
+        // Run the simulation for 200 ns
+        #500 $stop;  // stop the simulation
+    end
+
+endmodule
